@@ -1,28 +1,15 @@
-import sys
+from collections import deque
 
-N = int(sys.stdin.readline().rstrip())
-queue = []
-first = 0
-last = N-1
-res = 0
+# 입력 받기
+N = int(input())
 
-for i in range(1,N+1,1):
-    queue.append(i)
+# 큐 초기화
+queue = deque(range(1, N + 1))
 
-state = 0 # 0=버리기 1=쌓기
-while True:
-    if len(queue)-first == 1:
-        res = queue[first] # 마지막 남아있는거 쳐 저장하고
-        break
-    elif state==0: # 버리기
-        first+=1
-        state=1
-    elif state==1: #쌓기
-        queue.append(queue[first])
-        first+=1
-        last+=1
-        state=0
+# 큐 처리
+while len(queue) > 1:
+    queue.popleft()  # 제일 위의 카드를 버림
+    queue.append(queue.popleft())  # 그 다음 카드를 제일 아래로 이동
 
-
-print(res)
-
+# 마지막 남은 카드 출력
+print(queue[0])
