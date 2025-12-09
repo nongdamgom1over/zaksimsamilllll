@@ -6,7 +6,8 @@ def solution(n):
         n=n//10
 
     arr.sort(reverse=True)
-    for value in arr:
-        answer+=str(value)
 
-    return int(answer)
+    return int("".join(map(str,arr)))
+
+n = 118372
+print(solution(n))
