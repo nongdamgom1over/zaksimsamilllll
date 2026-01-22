@@ -1,34 +1,36 @@
 def solution(picks, minerals):
     answer = 0 # 피로도
-
-    max_mine = sum(picks) * 5 # 캘 수 잇는 최대 광물
-    minerals = minerals[:max_mine]
+    max_mine = sum(picks)*5
+    r = min(max_mine, len(minerals))
     chunks = []
-    for start in range(0, len(minerals), 5):
-        d, i, s = 0, 0, 0
-        for k in range(start, min(start + 5, len(minerals))):
+    for start in range(0,max_mine,5):
+        d,i,s = 0,0,0
+        for k in range(start,min(start+5, r)):
             if minerals[k] == "diamond":
-                d += 1
+                d+=1
             elif minerals[k] == "iron":
                 i+=1
             elif minerals[k] == "stone":
                 s+=1
+            else:
+                break
         chunks.append((d,i,s))
-    # stone 기준 피로도 계산 > 내림차순
-    chunks.sort(key=lambda x: x[0]*25 + x[1]*5 + x[2], reverse=True)
 
-    # 곡괭이 배치
+    # 정렬
+    chunks.sort(key=lambda x:x[0]*25+x[1]*5+x[2], reverse=True)
+
+    # 곡괭이 배정
     for d,i,s in chunks:
-        if picks[0] > 0: # 다곡
+        if picks[0]>0:
             answer+=d+i+s
             picks[0]-=1
-        elif picks[1] > 0: # 철곡
+        elif picks[1]>0:
             answer+=d*5+i+s
             picks[1]-=1
-        elif picks[2] > 0: # 돌곡
-            answer+= d*25 + i*5 + s
+        elif picks[2]>0:
+            answer+=d*25+i*5+s
             picks[2]-=1
-        else: # 곡괭이 선택 불가
+        else:
             break
 
     return answer
