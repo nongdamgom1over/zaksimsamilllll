@@ -1,6 +1,6 @@
 def solution(k, dungeons):
-    answer = 0
     n = len(dungeons)
+    answer = 0
     visited = [False] * n
 
     def dfs(cur_k, cnt):
@@ -15,6 +15,7 @@ def solution(k, dungeons):
                     dfs(cur_k-cost,cnt+1)
                     visited[i] = False
     dfs(k,0)
+
     return answer
 
 k = 80
